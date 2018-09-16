@@ -1,8 +1,7 @@
 package Model;
 
-public class Human {
-    private int health;
-    private int stepArrange;
-    private int might;
-    private int moxie;
+public class Human extends Being {
+    public Human(int health, int stepArrange, int might, int moxie) {
+        super(health, stepArrange, might, moxie);
+    }
 }

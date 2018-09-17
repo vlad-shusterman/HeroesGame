@@ -1,6 +1,6 @@
 package Model;
 
-import java.awt.*;
+import org.eclipse.swt.graphics.Image;
 
 public class Being implements Entity {
     private int health;
@@ -9,7 +9,7 @@ public class Being implements Entity {
     private int moxie;
     private Coordinates coordinates;
     private int currentBlock;
-
+    private Image image;
 
     public Being(int health, int stepArrange, int might, int moxie) {
         this.coordinates = new Coordinates();
@@ -19,12 +19,19 @@ public class Being implements Entity {
         this.stepArrange = stepArrange;
         this.might = might;
         this.moxie = moxie;
+    }
 
+    protected void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     @Override
-    public void move() {
-
+    public void move(int newBlock) {
+        setCurrentBlock(newBlock);
     }
 
     public void setCurrentBlock(int currentBlock) {

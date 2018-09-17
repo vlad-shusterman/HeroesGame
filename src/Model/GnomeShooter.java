@@ -9,6 +9,7 @@ public class GnomeShooter extends Gnome {
 
     public GnomeShooter(int health, int stepArrange, int might, int moxie) {
         super(health, stepArrange, might, moxie);
+        setImage(image);
     }
 
     public void setShootsCount(int shootsCount) {

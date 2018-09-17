@@ -1,5 +1,5 @@
 package Model;
 
 public interface Entity {
-    void move();
+    void move(int newBlock);
 }

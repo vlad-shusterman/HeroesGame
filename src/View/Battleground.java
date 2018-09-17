@@ -1,5 +1,6 @@
 package View;
 
+import Model.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -9,22 +10,33 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Battleground {
     public static Display display = new Display();
     private Shell shell = new Shell(display, SWT.SHELL_TRIM | SWT.CENTER);
     public final int WIDTH = 24;
-    public final int HEIGHT = 21;
-    public final int BLOCKS = 504;
+    public final int HEIGHT = 19;
+    public final int BLOCKS = WIDTH*HEIGHT;
+    private List <Button> blocks = new ArrayList<>(484);
+    private Hero hero1;
+    private Hero hero2;
 
-    public Battleground() {
+
+    public Battleground(Hero hero1, Hero hero2) {
+        this.hero1 = hero1;
+        this.hero2 = hero2;
         Color gray = display.getSystemColor(SWT.COLOR_DARK_YELLOW);
         shell.setText("Battleground");
-        shell.setSize(1100, 695);
+        shell.setSize(1386, 865);
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = WIDTH;
         shell.setBackground(gray);
         shell.setLayout(gridLayout);
         drawField();
+        drawUnits(hero1.getArmy());
+        drawUnits(hero2.getArmy());
         shell.open();
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
@@ -35,24 +47,26 @@ public class Battleground {
     }
 
     private void drawField() {
-        for (int i=0; i< BLOCKS; i++) {
-            Button b = new Button(shell, SWT.PUSH);
-            b.setSize(new Point(200,40));
-            Image image1 = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/gnome.gif");
+        for (int block = 0; block < BLOCKS; block++) {
+            Button button = new Button(shell, SWT.NONE);
+            button.setSize(new Point(200, 40));
             Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/field.jpg");
-            Image image2 = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/gnome-shooter.png");
-            b.setImage(image);
-
-            if (i ==1) {
-                b.setImage(image1);
-            }
-            if (i == 26) {
-                b.setImage(image2);
-            }
+            button.setImage(image);
+            blocks.add(button);
         }
     }
 
-    private void drawUnits () {
+    private void redraw () {
+        drawField();
+        drawUnits(hero1.getArmy());
+        drawUnits(hero2.getArmy());
+    }
 
+    private void drawUnit(Being being) {
+        blocks.get(being.getCurrentBlock()).setImage(being.getImage());
+    }
+
+    private void drawUnits (List <Being> army) {
+        army.forEach(this::drawUnit);
     }
 }

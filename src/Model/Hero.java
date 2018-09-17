@@ -22,6 +22,10 @@ public class Hero {
         this.army = army;
     }
 
+    public void addUnit (Being unit) {
+        army.add(unit);
+    }
+
     public int getHealMight() {
         return healMight;
     }

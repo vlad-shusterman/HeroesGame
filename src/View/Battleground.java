@@ -41,8 +41,8 @@ public class Battleground {
         gridLayout.numColumns = WIDTH;
         shell.setBackground(gray);
         shell.setLayout(gridLayout);
-        List list = controller.sortUnits(hero1.getArmy(), hero2.getArmy());
-        currentUnit = (Being) list.get(currentCtep);
+        List  queue = controller.sortUnits(hero1.getArmy(), hero2.getArmy());
+        currentUnit = (Being)  queue.get(currentCtep);
         drawField();
         drawUnits(hero1.getArmy());
         drawUnits(hero2.getArmy());

@@ -6,7 +6,7 @@ public class Being implements Entity {
     private int health;
     private int stepArrange;
     private int might;
-    private int moxie;
+    public int moxie;
     private Coordinates coordinates;
     private int currentBlock;
     private Image image;
@@ -21,13 +21,14 @@ public class Being implements Entity {
         this.moxie = moxie;
     }
 
-    protected void setImage(Image image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
     public Image getImage() {
         return image;
     }
+
 
     @Override
     public void move(int newBlock) {

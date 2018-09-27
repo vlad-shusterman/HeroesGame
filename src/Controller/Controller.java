@@ -1,25 +1,28 @@
 package Controller;
 
+import Model.ArmyQueue;
 import Model.Being;
+import Model.Hero;
 
 import java.util.*;
 
 public class Controller {
-    private List<Being> queue = new ArrayList<>();
 
-    public List<Being> sortUnits(List<Being> units1, List<Being> units2) {
-        System.out.println(units1);
-        queue.addAll(units1);
-        queue.addAll(units2);
-        for (int unit = 0; unit < queue.size(); unit++) {
-            for (int j = unit + 1; j < queue.size(); j++) {
-                if (queue.get(unit).getMoxie() < queue.get(j).getMoxie()) {
-                    Being tmp = queue.get(j);
-                    queue.set(j, queue.get(unit));
-                    queue.set(unit, tmp);
-                }
-            }
-        }
-        return queue;
+    private ArmyQueue queue;
+
+    public Controller(Hero hero1, Hero hero2) {
+        queue = new ArmyQueue(hero1.getArmy(), hero2.getArmy());
+    }
+
+    public Being getCurrentUnit() {
+        return queue.getCurrentUnit();
+    }
+
+    public int getCurrentStep() {
+        return queue.getCurrentStep();
+    }
+
+    public void incrementStep() {
+        queue.incrementStep();
     }
 }

@@ -22,7 +22,7 @@ public class Battleground {
     public final int WIDTH = 24;
     public final int HEIGHT = 19;
     public final int BLOCKS = WIDTH * HEIGHT;
-    private List<Button> blocks = new ArrayList<>(484);
+    private List<Block> blocks = new ArrayList<>(484);
     private Hero hero1;
     private Hero hero2;
     private Controller controller;
@@ -42,7 +42,7 @@ public class Battleground {
         drawField();
         drawUnits(hero1.getArmy());
         drawUnits(hero2.getArmy());
-        blocks.get(controller.getCurrentUnit().getCurrentBlock()).setBackground(display.getSystemColor(SWT.COLOR_GREEN));
+        blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
         shell.open();
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
@@ -54,23 +54,20 @@ public class Battleground {
 
     private void drawField() {
         for (int block = 0; block < BLOCKS; block++) {
-            Button button = new Button(shell, SWT.NONE);
-            button.setSize(new Point(200, 40));
-            Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/field.jpg");
-            button.setImage(image);
+            Block button = new Block(shell, display, block);
             int finalBlock = block;
-            button.addSelectionListener(new SelectionAdapter() {
+            button.getButton().addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent selectionEvent) {
                     if (Math.abs(blocks.indexOf(button)-controller.getCurrentUnit().getCurrentBlock()) <= controller.getCurrentUnit().getStepArrange()){
                         Image image = button.getImage();
-                        blocks.get(controller.getCurrentUnit().getCurrentBlock()).setBackground(display.getSystemColor(SWT.COLOR_GRAY));
-                        blocks.get(controller.getCurrentUnit().getCurrentBlock()).setImage(image);
+                        blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GRAY));
+                        blocks.get(controller.getCurrentUnit().getCurrentBlock()).setButtonImage(image);;
                         controller.getCurrentUnit().setCurrentBlock(finalBlock);
                         drawUnit(controller.getCurrentUnit());
                         controller.incrementStep();
                     }
-                    blocks.get(controller.getCurrentUnit().getCurrentBlock()).setBackground(display.getSystemColor(SWT.COLOR_GREEN));
+                    blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
                 }
             });
             blocks.add(button);
@@ -87,7 +84,7 @@ public class Battleground {
     }
 
     private void drawUnit(Being being) {
-        blocks.get(being.getCurrentBlock()).setImage(being.getImage());
+        blocks.get(being.getCurrentBlock()).setButtonImage(being.getImage());
     }
 
     private void drawUnits(List<Being> army) {

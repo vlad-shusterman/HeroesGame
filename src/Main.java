@@ -1,6 +1,4 @@
-import Model.GnomeFighter;
-import Model.GnomeShooter;
-import Model.Hero;
+import Model.*;
 import View.Battleground;
 
 public class Main {
@@ -18,8 +16,14 @@ public class Main {
         gnomeFighter1.setCurrentBlock(23);
         GnomeShooter gnomeShooter1 = new GnomeShooter(1,1,1,4);
         gnomeShooter1.setCurrentBlock(46);
+        PixieDefault pixieDefault = new PixieDefault(1,1,1,1);
+        pixieDefault.setCurrentBlock(49);
+        PixieTop pixieTop = new PixieTop(1,1,1,1);
+        pixieTop.setCurrentBlock(92);
         hero2.addUnit(gnomeFighter1);
+        hero2.addUnit(pixieTop);
         hero2.addUnit(gnomeShooter1);
+        hero2.addUnit(pixieDefault);
         Battleground battleground = new Battleground(hero1, hero2);
     }
 }

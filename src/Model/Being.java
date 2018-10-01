@@ -7,14 +7,11 @@ public class Being implements Entity {
     private int stepArrange;
     private int might;
     public int moxie;
-    private Coordinates coordinates;
     private int currentBlock;
     private Image image;
+    private Coordinates coordinates;
 
     public Being(int health, int stepArrange, int might, int moxie) {
-        this.coordinates = new Coordinates();
-        coordinates.setX(currentBlock % 24 - 1);
-        coordinates.setY(currentBlock / 24 - 1);
         this.health = health;
         this.stepArrange = stepArrange;
         this.might = might;
@@ -37,6 +34,7 @@ public class Being implements Entity {
 
     public void setCurrentBlock(int currentBlock) {
         this.currentBlock = currentBlock;
+        coordinates = new Coordinates(currentBlock);
     }
 
     public int getCurrentBlock() {
@@ -73,5 +71,9 @@ public class Being implements Entity {
 
     public void setStepArrange(int stepArrange) {
         this.stepArrange = stepArrange;
+    }
+
+    public Boolean checkMove(Coordinates coordinates) {
+        return true;
     }
 }

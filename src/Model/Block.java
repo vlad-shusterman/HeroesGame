@@ -36,4 +36,8 @@ public class Block {
     public Coordinates getCoordinates() {
         return coordinates;
     }
+
+    public int getCurrentBlock() {
+        return currentBlock;
+    }
 }

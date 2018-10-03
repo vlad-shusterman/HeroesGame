@@ -74,6 +74,11 @@ public class Being implements Entity {
     }
 
     public Boolean checkMove(Coordinates coordinates) {
-        return true;
+        System.out.println((Math.abs(this.coordinates.getX() - coordinates.getX()) + Math.abs(this.coordinates.getY() - coordinates.getY())));
+        if ((Math.abs(this.coordinates.getX() - coordinates.getX()) + Math.abs(this.coordinates.getY() - coordinates.getY())) <= stepArrange) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

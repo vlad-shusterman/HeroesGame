@@ -18,11 +18,19 @@ public class Controller {
         return queue.getCurrentUnit();
     }
 
+    public List<Being> getQueue() {
+        return queue.getQueue();
+    }
+
     public int getCurrentStep() {
         return queue.getCurrentStep();
     }
 
     public void incrementStep() {
         queue.incrementStep();
+    }
+
+    public void deleteUnit(int index) {
+        queue.deleteUnit(index);
     }
 }

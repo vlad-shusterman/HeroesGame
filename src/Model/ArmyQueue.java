@@ -49,4 +49,8 @@ public class ArmyQueue {
         }
         currentUnit = queue.get(currentStep);
     }
+
+    public void deleteUnit (int index) {
+        queue.remove(index);
+    }
 }

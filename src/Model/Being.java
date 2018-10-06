@@ -8,6 +8,7 @@ public class Being implements Entity {
     private int might;
     public int moxie;
     private int currentBlock;
+    private Hero hero;
     private Image image;
     private Coordinates coordinates;
 
@@ -26,6 +27,13 @@ public class Being implements Entity {
         return image;
     }
 
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
 
     @Override
     public void move(int newBlock) {

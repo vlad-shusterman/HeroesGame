@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
@@ -62,16 +63,22 @@ public class Battleground {
                     if (controller.getCurrentUnit().checkMove(button.getCoordinates())) {
                         if (checkForbattle(controller.getCurrentUnit(), button) != 10000) {
                             int index = checkForbattle(controller.getCurrentUnit(), button);
-                            Fight fight = new Fight(controller.getCurrentUnit(), controller.getQueue().get(checkForbattle(controller.getCurrentUnit(), button)));
-                            if (fight.getResult() == 0) {
-                                Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/field.jpg");
-                                blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GRAY));
-                                blocks.get(controller.getCurrentUnit().getCurrentBlock()).setButtonImage(image);
-                                controller.getCurrentUnit().setCurrentBlock(finalBlock);
-                                drawUnit(controller.getCurrentUnit());
-                                controller.deleteUnit(index);
-                                controller.incrementStep();
-                                blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
+                            if (index == -1) {
+                                MessageBox messageBox = new MessageBox(shell, SWT.NONE);
+                                messageBox.open();
+
+                            } else {
+                                Fight fight = new Fight(controller.getCurrentUnit(), controller.getQueue().get(checkForbattle(controller.getCurrentUnit(), button)));
+                                if (fight.getResult() == 0) {
+                                    Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/field.jpg");
+                                    blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GRAY));
+                                    blocks.get(controller.getCurrentUnit().getCurrentBlock()).setButtonImage(image);
+                                    controller.getCurrentUnit().setCurrentBlock(finalBlock);
+                                    drawUnit(controller.getCurrentUnit());
+                                    controller.deleteUnit(index);
+                                    controller.incrementStep();
+                                    blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
+                                }
                             }
                         } else {
                             Image image = button.getImage();
@@ -97,7 +104,11 @@ public class Battleground {
         int check = 10000;
         for (int unit = 0; unit < controller.getQueue().size(); unit++) {
             if (block.getCurrentBlock() == controller.getQueue().get(unit).getCurrentBlock()) {
-                check = unit;
+                if (controller.getQueue().get(unit).getHero() != controller.getCurrentUnit().getHero()) {
+                    check = unit;
+                } else {
+                    check = -1;
+                }
             }
         }
         return check;

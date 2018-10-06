@@ -23,6 +23,7 @@ public class Hero {
     }
 
     public void addUnit (Being unit) {
+        unit.setHero(this);
         army.add(unit);
     }
 

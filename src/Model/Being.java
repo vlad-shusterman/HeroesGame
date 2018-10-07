@@ -82,8 +82,8 @@ public class Being implements Entity {
     }
 
     public Boolean checkMove(Coordinates coordinates) {
-        System.out.println((Math.abs(this.coordinates.getX() - coordinates.getX()) + Math.abs(this.coordinates.getY() - coordinates.getY())));
-        if ((Math.abs(this.coordinates.getX() - coordinates.getX()) + Math.abs(this.coordinates.getY() - coordinates.getY())) <= stepArrange) {
+        if ((Math.abs(this.coordinates.getX() - coordinates.getX()) + Math.abs(this.coordinates.getY() - coordinates.getY())) <= stepArrange
+                && !(this.coordinates.getX() == coordinates.getX() && this.coordinates.getY() == coordinates.getY())) {
             return true;
         } else {
             return false;

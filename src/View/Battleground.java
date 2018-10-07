@@ -8,11 +8,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ public class Battleground {
         controller = new Controller(hero1, hero2);
         Color gray = display.getSystemColor(SWT.COLOR_DARK_YELLOW);
         shell.setText("Battleground");
-        shell.setSize(1386, 865);
+        shell.setSize(1386, 880);
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = WIDTH;
         shell.setBackground(gray);
@@ -43,6 +41,7 @@ public class Battleground {
         drawField();
         drawUnits(hero1.getArmy());
         drawUnits(hero2.getArmy());
+        findActiveBlocks();
         blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
         shell.open();
         while (!shell.isDisposed()) {
@@ -77,6 +76,7 @@ public class Battleground {
                                     drawUnit(controller.getCurrentUnit());
                                     controller.deleteUnit(index);
                                     controller.incrementStep();
+                                    findActiveBlocks();
                                     blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
                                 }
                             }
@@ -84,10 +84,10 @@ public class Battleground {
                             Image image = button.getImage();
                             blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GRAY));
                             blocks.get(controller.getCurrentUnit().getCurrentBlock()).setButtonImage(image);
-
                             controller.getCurrentUnit().setCurrentBlock(finalBlock);
                             drawUnit(controller.getCurrentUnit());
                             controller.incrementStep();
+                            findActiveBlocks();
                             blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
                         }
                     }
@@ -126,5 +126,15 @@ public class Battleground {
 
     private void drawUnits(List<Being> army) {
         army.forEach(this::drawUnit);
+    }
+
+    public void findActiveBlocks() {
+        for (int block = 0; block < blocks.size(); block++) {
+            if (controller.getCurrentUnit().checkMove(blocks.get(block).getCoordinates())) {
+                blocks.get(block).getButton().setBackground(display.getSystemColor(SWT.COLOR_DARK_YELLOW));
+            } else {
+                blocks.get(block).getButton().setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+            }
+        }
     }
 }

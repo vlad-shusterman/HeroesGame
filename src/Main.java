@@ -4,7 +4,8 @@ import View.Battleground;
 public class Main {
 
     public static void main(String[] args) {
-        Hero hero1 = new Hero(10, 15);
+        Hero hero1 = new Hero(4, 4);
+        hero1.setOwnNumber(1);
         GnomeFighter gnomeFighter = new GnomeFighter();
         gnomeFighter.setCurrentBlock(2);
         GnomeShooter gnomeShooter = new GnomeShooter();
@@ -14,7 +15,8 @@ public class Main {
         hero1.addUnit(gnomeFighter);
         hero1.addUnit(humanPeasant);
         hero1.addUnit(gnomeShooter);
-        Hero hero2 = new Hero(10, 10);
+        Hero hero2 = new Hero(4, 4);
+        hero2.setOwnNumber(2);
         GnomeFighter gnomeFighter1 = new GnomeFighter();
         gnomeFighter1.setCurrentBlock(23);
         GnomeShooter gnomeShooter1 = new GnomeShooter();
@@ -28,5 +30,6 @@ public class Main {
         hero2.addUnit(gnomeShooter1);
         hero2.addUnit(pixieDefault);
         Battleground battleground = new Battleground(hero1, hero2);
+        battleground.addObserver(new )
     }
 }

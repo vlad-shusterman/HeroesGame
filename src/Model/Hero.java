@@ -12,6 +12,7 @@ public class Hero {
     private int healMight;
     private int makeArmorMight;
     private Image image;
+    private int ownNumber;
 
     public Hero(int healMight, int makeArmorMight) {
         this.healMight = healMight;
@@ -32,11 +33,11 @@ public class Hero {
         army.add(unit);
     }
 
-    public boolean checkForLoose () {
+    public boolean checkForLoose() {
         return getArmy().size() == 0;
     }
 
-    public void removeUnit (Being unit) {
+    public void removeUnit(Being unit) {
         getArmy().remove(unit);
     }
 
@@ -58,6 +59,14 @@ public class Hero {
 
     public int getMakeArmorMight() {
         return makeArmorMight;
+    }
+
+    public int getOwnNumber() {
+        return ownNumber;
+    }
+
+    public void setOwnNumber(int ownNumber) {
+        this.ownNumber = ownNumber;
     }
 
     public void setMakeArmorMight(int makeArmorMight) {

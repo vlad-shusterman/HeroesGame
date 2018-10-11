@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -12,7 +13,7 @@ public class Block {
     private int currentBlock;
     Coordinates coordinates;
 
-    public Block(Shell shell, Display display, int currentBlock) {
+    public Block(Composite shell, Display display, int currentBlock) {
         button = new Button(shell, SWT.NONE);
         button.setSize(new Point(200, 40));
         this.currentBlock = currentBlock;

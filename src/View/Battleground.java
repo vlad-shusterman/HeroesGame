@@ -23,9 +23,16 @@ public class Battleground {
     private Hero hero1;
     private Hero hero2;
     private Controller controller;
-
+    private Composite compositeMain = new Composite(shell, SWT.NONE);
+    private Composite compositeLeft = new Composite(compositeMain, SWT.NONE);
+    private Composite compositeRight = new Composite(compositeMain, SWT.NONE);
+    private Logs logs = new Logs();
+    Observer observer;
 
     public Battleground(Hero hero1, Hero hero2) {
+        shell.setText("Battleground");
+
+        shell.setSize(1790, 880);
         this.hero1 = hero1;
         this.hero2 = hero2;
         Image hero1Image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/Hero1.png");
@@ -34,12 +41,16 @@ public class Battleground {
         hero2.setImage(hero2Image);
         controller = new Controller(hero1, hero2);
         Color gray = display.getSystemColor(SWT.COLOR_DARK_YELLOW);
-        shell.setText("Battleground");
-        shell.setSize(1390, 880);
         GridLayout gridLayout = new GridLayout();
+        GridLayout gridLayout1 = new GridLayout();
+        gridLayout1.numColumns = 2;
+        compositeLeft.setLayout(gridLayout);
+        compositeMain.setLayout(gridLayout1);
+        GridLayout gridLayoutShell = new GridLayout();
+        gridLayoutShell.numColumns = 2;
+        shell.setLayout(gridLayoutShell);
         gridLayout.numColumns = WIDTH;
         shell.setBackground(gray);
-        shell.setLayout(gridLayout);
         drawField();
         drawUnits(hero1.getArmy());
         drawUnits(hero2.getArmy());
@@ -55,8 +66,11 @@ public class Battleground {
     }
 
     private void drawField() {
+        Label label = new Label(compositeRight, SWT.LEFT);
+        label.setBounds(100,100,200,400);
+        label.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
         for (int block = 0; block < BLOCKS; block++) {
-            Block button = new Block(shell, display, block);
+            Block button = new Block(compositeLeft, display, block);
             int finalBlock = block;
             button.getButton().addSelectionListener(new SelectionAdapter() {
                 @Override
@@ -78,6 +92,7 @@ public class Battleground {
                                     controller.deleteUnit(index, shell);
                                     controller.incrementStep();
                                     findActiveBlocks();
+                                    observer.update("Yo ho ho");
                                     blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
                                 } else {
                                     Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/field.jpg");
@@ -101,7 +116,7 @@ public class Battleground {
                                         findActiveBlocks();
                                         blocks.get(controller.getCurrentUnit().getCurrentBlock()).getButton().setBackground(display.getSystemColor(SWT.COLOR_GREEN));
                                     } else if (controller.getCurrentUnit().getCoordinates().getX() == controller.getQueue().get(index).getCoordinates().getX()) {
-                                        if (controller.getCurrentUnit().getCoordinates().getY() > controller.getQueue().get(index).getCoordinates().getY()){
+                                        if (controller.getCurrentUnit().getCoordinates().getY() > controller.getQueue().get(index).getCoordinates().getY()) {
                                             controller.getQueue().get(index).setCurrentBlock(controller.getQueue().get(index).getCurrentBlock() + 24);
                                             blocks.get(controller.getCurrentUnit().getCurrentBlock()).setButtonImage(image);
                                             controller.getCurrentUnit().setCurrentBlock(controller.getQueue().get(index).getCurrentBlock() - 24);
@@ -122,7 +137,8 @@ public class Battleground {
                                         }
                                     }
                                 }
-
+                                logs.update(controller.getCurrentUnit() + "\n" + " Damaged " + controller.getQueue().get(index) + "\n" + " in " + "\n" + fight.getResult() + "Damage");
+//                                label.setText(logs.getLog());
                             }
                         } else {
                             Image image = button.getImage();
@@ -141,7 +157,7 @@ public class Battleground {
         }
         for (int i = 0; i < WIDTH; i++) {
             Image image = new Image(display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/HeroBlock.png");
-            Button b = new Button(shell, SWT.ALT);
+            Button b = new Button(compositeLeft, SWT.ALT);
             b.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
             if (i == 0) {
                 b.setImage(hero1.getImage());

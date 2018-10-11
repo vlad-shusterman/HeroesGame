@@ -10,6 +10,7 @@ import java.util.List;
 public class ArmyQueue {
     private List<Being> queue = new ArrayList<>();
     private Being currentUnit;
+    private Hero currentHero;
     private int currentStep = 0;
     Hero hero1;
     Hero hero2;
@@ -49,15 +50,23 @@ public class ArmyQueue {
     }
 
     public void incrementStep() {
+        this.currentHero = null;
         if (currentStep == queue.size() - 1) {
             currentStep = 0;
         } else {
             currentStep++;
         }
+        if (currentUnit.getMoxie() < 3) {
+            this.currentHero = currentUnit.getHero();
+        }
         currentUnit = queue.get(currentStep);
     }
 
-    public void deleteUnit (int index, Shell shell) {
+    public Hero getCurrentHero() {
+        return currentHero;
+    }
+
+    public void deleteUnit(int index, Shell shell) {
         if (queue.get(index).getHero().getArmy().size() == 1) {
             queue.get(index).getHero().removeUnit(queue.get(index));
             queue.remove(index);
@@ -65,6 +74,7 @@ public class ArmyQueue {
             MessageBox messageBox = new MessageBox(shell, SWT.NONE);
             messageBox.setMessage("YOU WON CONGRATULATIONS!!!!!");
             messageBox.open();
+            shell.close();
         } else {
             queue.get(index).getHero().removeUnit(queue.get(index));
             queue.remove(index);

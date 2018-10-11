@@ -1,5 +1,9 @@
 package Model;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +11,14 @@ public class ArmyQueue {
     private List<Being> queue = new ArrayList<>();
     private Being currentUnit;
     private int currentStep = 0;
+    Hero hero1;
+    Hero hero2;
 
-
-    public ArmyQueue(List<Being> units1, List<Being> units2) {
-        queue.addAll(units1);
-        queue.addAll(units2);
+    public ArmyQueue(Hero hero1, Hero hero2) {
+        this.hero1 = hero1;
+        this.hero2 = hero2;
+        queue.addAll(this.hero1.getArmy());
+        queue.addAll(this.hero2.getArmy());
         sortUnits();
         currentUnit = queue.get(0);
     }
@@ -50,7 +57,18 @@ public class ArmyQueue {
         currentUnit = queue.get(currentStep);
     }
 
-    public void deleteUnit (int index) {
-        queue.remove(index);
+    public void deleteUnit (int index, Shell shell) {
+        if (queue.get(index).getHero().getArmy().size() == 1) {
+            queue.get(index).getHero().removeUnit(queue.get(index));
+            queue.remove(index);
+            currentStep--;
+            MessageBox messageBox = new MessageBox(shell, SWT.NONE);
+            messageBox.setMessage("YOU WON CONGRATULATIONS!!!!!");
+            messageBox.open();
+        } else {
+            queue.get(index).getHero().removeUnit(queue.get(index));
+            queue.remove(index);
+            currentStep--;
+        }
     }
 }

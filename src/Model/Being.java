@@ -57,6 +57,10 @@ public class Being implements Entity {
         return might;
     }
 
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
     public int getMoxie() {
         return moxie;
     }

@@ -6,8 +6,8 @@ import org.eclipse.swt.graphics.Image;
 public class PixieTop extends Pixie {
     private Image image = new Image(Battleground.display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/pixie-top.gif");
 
-    public PixieTop(int health, int stepArrange, int might, int moxie) {
-        super(health, stepArrange, might, moxie);
+    public PixieTop() {
+        super(9, 5, 3, 2);
         setImage(image);
     }
 }

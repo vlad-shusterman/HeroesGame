@@ -3,6 +3,7 @@ package Controller;
 import Model.ArmyQueue;
 import Model.Being;
 import Model.Hero;
+import org.eclipse.swt.widgets.Shell;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class Controller {
     private ArmyQueue queue;
 
     public Controller(Hero hero1, Hero hero2) {
-        queue = new ArmyQueue(hero1.getArmy(), hero2.getArmy());
+        queue = new ArmyQueue(hero1, hero2);
     }
 
     public Being getCurrentUnit() {
@@ -30,7 +31,7 @@ public class Controller {
         queue.incrementStep();
     }
 
-    public void deleteUnit(int index) {
-        queue.deleteUnit(index);
+    public void deleteUnit(int index, Shell shell) {
+        queue.deleteUnit(index, shell);
     }
 }

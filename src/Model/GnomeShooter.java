@@ -7,8 +7,8 @@ public class GnomeShooter extends Gnome {
     private int shootsCount;
     private Image image = new Image(Battleground.display, "C:/Users/vlads/IdeaProjects/HeroesUniversity/src/Images/gnome-shooter.png");
 
-    public GnomeShooter(int health, int stepArrange, int might, int moxie) {
-        super(health, stepArrange, might, moxie);
+    public GnomeShooter() {
+        super(8, 3, 2, 2);
         setImage(image);
     }
 

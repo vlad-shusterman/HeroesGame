@@ -1,5 +1,9 @@
 package Model;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.MessageBox;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +11,9 @@ public class Hero {
     private List army;
     private int healMight;
     private int makeArmorMight;
+    private Image image;
 
-    public Hero (int healMight, int makeArmorMight) {
+    public Hero(int healMight, int makeArmorMight) {
         this.healMight = healMight;
         this.makeArmorMight = makeArmorMight;
         army = new ArrayList();
@@ -22,9 +27,25 @@ public class Hero {
         this.army = army;
     }
 
-    public void addUnit (Being unit) {
+    public void addUnit(Being unit) {
         unit.setHero(this);
         army.add(unit);
+    }
+
+    public boolean checkForLoose () {
+        return getArmy().size() == 0;
+    }
+
+    public void removeUnit (Being unit) {
+        getArmy().remove(unit);
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public int getHealMight() {
